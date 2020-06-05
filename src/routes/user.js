@@ -3,19 +3,17 @@ const user = express.Router();
 const jwt= require('jsonwebtoken');
 const db = require('../config/database')
 
-//ruta para agregar un nuevo usuario a la db
+
+//ruta para agregar un nuevo usuario a la db----------------------NO VA A SERVIR,SOLO SE AGREGAN USUARIOS DESDE LA BD
 user.post("/", async(req,res,next) => {
-    const {user_name,user_lastName,user_mail,user_position,
-        user_permission} = req.body;
+    const {user_name,user_lastName,user_mail,user_position, user_password} = req.body;
     
-    if(user_name && user_lastName && user_mail && user_position &&
-    user_permission){
+    if(user_name && user_lastName && user_mail && user_position && user_password ){
         
-        let query = "INSERT INTO user(user_name, user_lastName,"
-        
-        query += " user_mail, user_position, user_permission)"
+        let query = "INSERT INTO user(user_name, user_lastName, user_mail, user_position, user_password)"
+
         query += ` VALUES ('${user_name}', '${user_lastName}',
-        '${user_mail}', '${user_position}', '${user_permission}');`;
+        '${user_mail}', '${user_position}', '${user_password}');`;
         
         const usuario = await db.query(query);
 
@@ -40,13 +38,11 @@ user.delete("/:id([0-9]{1,3})", async(req,res,next)=>{
 });
 //ruta para modificar por completo al usuario
 user.put("/:id([0-9]{1,3})" , async(req,res,next) =>{
-    const {user_name,user_lastName,user_mail,user_position,
-    user_permission} = req.body;
+    const {user_name,user_lastName,user_mail,user_position, user_password} = req.body;
 
-    if(user_name && user_lastName && user_mail && user_position &&
-    user_permission){
-        let query = `UPDATE user SET user_name = '${user_name}',  user_lastName = '${user_lastName}', user_mail = '${user_mail}',`;
-        query += ` user_position = '${user_position}', user_permission = '${user_permission}'  WHERE user_id = ${req.params.id};`;
+    if(user_name && user_lastName && user_mail && user_position && user_password){
+        let query = `UPDATE user SET user_name='${user_name}', user_lastName='${user_lastName}',`;
+        query += ` user_mail='${user_mail}', user_position='${user_position}',user_password='${user_password}' WHERE user_id = '${req.params.id}';`;
         
         const user = await db.query(query);
 
@@ -55,7 +51,7 @@ user.put("/:id([0-9]{1,3})" , async(req,res,next) =>{
         }
         return res.status(500).json({code:500, message:"oh ooh ocurrio un error"});
     }
-    return res.status(500).json({code:500, message:"Campos incompletosm"})
+    return res.status(500).json({code:500, message:"Campos incompletos"})
 });
 //ruta para obtener todos los usuarios
 user.get('/' , async(req,res,next)=>{

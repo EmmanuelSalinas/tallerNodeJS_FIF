@@ -2,25 +2,24 @@
 const morgan = require('morgan');
 const express = require('express');   //aqui se importa la libreria express
 const app = express();  //se crea una instancia 
-const user = require('./routes/user')
+const user = require('./routes/user');
+const login = require('./routes/login');
 
 //middleware
+const auth = require ('./middleware/auth');
+const index = require('./middleware/index');
+const notFound = require('./middleware/notFound');
+
 app.use(morgan('dev'));
-    //para usar el body
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());//para usar el body
+app.use(express.urlencoded({ extended: true }));//para usar el body
 
 
-app.get("/" , (req,res,next)=>{
-    res.status(200).json({code:1,message:"Bienvenido al Servidor"})
-});
-
-app.use("/user",user)
-
-
-app.use((req,res,next)=>{
-    return res.status(404).json({code:404, message:"URL no encontrada"});
-});
+app.get("/" , index);
+app.use("/login",login);
+app.use(auth);
+app.use("/user",user);
+app.use(notFound);
 
 app.listen(process.env.PORT ||3000, () => {
     console.log("Server is running... ;)")
