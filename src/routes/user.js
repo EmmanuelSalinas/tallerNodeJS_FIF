@@ -57,14 +57,13 @@ user.put("/:id([0-9]{1,3})" , async(req,res,next) =>{
     }
     return res.status(500).json({code:500, message:"Campos incompletosm"})
 });
-
-
+//ruta para obtener todos los usuarios
 user.get('/' , async(req,res,next)=>{
     const user = await db.query("SELECT * FROM user");
     
     return res.status(200).json({code:1, message:user});
 });
-
+//ruta para obtener un usuario por id
 user.get('/:id([0-9]{1,3})', async(req,res,next)=>{
     const id = req.params.id;
     
@@ -77,8 +76,6 @@ user.get('/:id([0-9]{1,3})', async(req,res,next)=>{
     return res.status(404).json({code: 404, message: "usuario no encontrado"});
     
 });
-
-
 
 //va al final
 module.exports=user;
