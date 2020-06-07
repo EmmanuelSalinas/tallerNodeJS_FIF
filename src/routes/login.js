@@ -4,7 +4,7 @@ const jwt= require('jsonwebtoken');
 const db = require('../config/database')
 
 
-login.post("/login", async(req,res,next)=>{
+login.post("/", async(req,res,next)=>{
     const{user_mail, user_password}=req.body;
     const query = `SELECT * FROM user WHERE user_mail='${user_mail}' AND user_password= '${user_password}';`;
     const user = await db.query(query);
@@ -23,7 +23,7 @@ login.post("/login", async(req,res,next)=>{
         }
     }
     else{
-        return res.status(500).json({code:500, message:"campos incompletos"})
+        return res.status(200).json({code:500, message:"campos incompletos"})
     }
 });
 
