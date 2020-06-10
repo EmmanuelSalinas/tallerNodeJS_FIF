@@ -6,7 +6,7 @@ function init (){
         document.querySelector('.btn-primary').addEventListener('click' , login);
     }
     else{
-        window.location.href = "usuario.html";
+        window.location.href = "./tabla/index.html";
     }
 }
 
@@ -28,7 +28,7 @@ function login(){
         if(res.data.code == 200){
             //alert("Inicio Exitoso")
             localStorage.setItem("token" , res.data.message);
-            window.location.href="usuario.html";
+            window.location.href="./tabla/index.html";
         }
         else{
             alert("Usuario y/o Contraseña Incorrectos")
