@@ -107,6 +107,40 @@ input {
 	outline: none;
 	border: none !important;
 }
+#logOut{
+  color: white;
+  background-color: #36304a;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;;
+}
+#logOut:hover{
+  color: #BF50C1;
+}
+
+.registro{
+  color: white;
+  background-color: #36304a;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;;
+
+}
+.registro:hover{
+  color: #BF50C1;
+  text-decoration: none;
+
+}
+#bSearchName{
+  color: white;
+  background-color: #36304a;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;;
+}
+#bSearchName:hover{
+  color: #BF50C1;
+}
 
 textarea {
   display: block;

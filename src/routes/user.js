@@ -4,8 +4,8 @@ const jwt= require('jsonwebtoken');
 const db = require('../config/database')
 
 
-//ruta para agregar un nuevo usuario a la db----------------------NO VA A SERVIR,SOLO SE AGREGAN USUARIOS DESDE LA BD
-user.post("/add/", async(req,res,next) => {
+//ruta para agregar un nuevo usuario a la db
+user.post("/", async(req,res,next) => {
     const {user_name,user_lastName,user_mail,user_position, user_password} = req.body;
     
     if(user_name && user_lastName && user_mail && user_position && user_password ){
@@ -62,7 +62,7 @@ user.get('/all/' , async(req,res,next)=>{
 //ruta para obtener un usuario por id
 user.get('/:id([0-9]{1,3})', async(req,res,next)=>{
     const id = req.params.id;
-    
+
     if(id >= 1 && id <= 100){
         const user = await db.query(`SELECT * FROM user WHERE user_id ='${id}';`);
         
@@ -71,6 +71,18 @@ user.get('/:id([0-9]{1,3})', async(req,res,next)=>{
     
     return res.status(404).json({code: 404, message: "usuario no encontrado"});
     
+});
+
+user.get("/:name([A-Za-z]+)", async(req,  res, next)=>{
+    const name = req.params.name;
+
+    const user = await db.query(`SELECT * FROM user WHERE user_name= '${name}' ;`);
+    if (user.length !=0){
+        return res.status(200).json({code: 200, message: user});
+    }
+    else{
+        return res.status(404).send({code: 404, message: "Usuario no encontrado"});
+    }
 });
 
 //va al final
